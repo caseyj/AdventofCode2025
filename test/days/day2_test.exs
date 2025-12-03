@@ -66,6 +66,42 @@ defmodule Days.Day2Test do
     end
   end
 
+
+
+  for {input, expected_output} <- [
+    {"hello", ["hello", "ello", "llo", "lo", "o"]},
+  ] do
+    test "Module function lexicographic_string_array input #{inspect(input)} expected output #{inspect(expected_output)}" do
+      assert Module.lexicographic_string_array(unquote(input)) == unquote(Macro.escape(expected_output))
+    end
+  end
+
+  for {input, expected_output} <- [
+    {"processing", %{
+      0=>[{"processing", 0}, {"cessing", 3},{"sing", 6}, {"g", 9}],
+      1=>[{"rocessing", 1},  {"essing", 4},  {"ing", 7}],
+      2=>[{"ocessing", 2},  {"ssing", 5},  {"ng", 8}]
+    }
+    },
+  ] do
+    test "Module function mod_3_lexicographic_strings input #{inspect(input)} expected output #{inspect(expected_output)}" do
+      assert Module.mod_3_lexicographic_strings(unquote(input)) == unquote(Macro.escape(expected_output))
+    end
+  end
+
+  for {input, expected_output} <- [
+    {"hello", "hel"},
+    {"ello", "ell"},
+    {"llo", "llo"},
+    {"lo", "lo*"},
+    {"o", "o**"}
+  ] do
+    test "Module function get_trigram input #{inspect(input)} expected output #{inspect(expected_output)}" do
+      assert Module.get_trigram(unquote(input)) == unquote(Macro.escape(expected_output))
+    end
+  end
+
+
   test "Day2 Part 1 test" do
     {:ok, data} = File.read("test/data/Day2.txt")
     assert Module.part1(data) == 1227775554
