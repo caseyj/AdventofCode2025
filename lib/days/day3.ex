@@ -1,20 +1,20 @@
 defmodule Days.Day3 do
-
   def append_to_map_list({map, key, new_val}) do
     if Map.has_key?(map, key) do
       update_in(
         map,
         [key],
         fn val ->
-          val ++ [
-            Integer.parse(key<>new_val)
-            |>elem(0)
-          ]
+          (val ++
+             [
+               Integer.parse(key <> new_val)
+               |> elem(0)
+             ])
           |> Enum.sort(:desc)
         end
       )
     else
-      Map.put(map, key, [Integer.parse(key<>new_val)|>elem(0)])
+      Map.put(map, key, [Integer.parse(key <> new_val) |> elem(0)])
     end
   end
 
@@ -36,8 +36,9 @@ defmodule Days.Day3 do
   end
 
   defp get_largest_from_map(map) do
-    Enum.reduce_while(Map.keys(map)|>Enum.sort(:desc), -1, fn key, acc ->
+    Enum.reduce_while(Map.keys(map) |> Enum.sort(:desc), -1, fn key, acc ->
       lst = Map.get(map, key)
+
       if length(lst) == 0 do
         {:cont, acc}
       else
@@ -48,7 +49,7 @@ defmodule Days.Day3 do
 
   def string_to_largest_combo(str) do
     number_line_to_map(str)
-    |>get_largest_from_map()
+    |> get_largest_from_map()
   end
 
   def process_and_sum(str) do
@@ -62,11 +63,11 @@ defmodule Days.Day3 do
   end
 
   def part1(str) do
-    process_and_sum(str)+1#missing 1 for some reason, works fine in process and sum
+    # missing 1 for some reason, works fine in process and sum
+    process_and_sum(str) + 1
   end
 
   def part2(_str) do
     :ok
   end
-
 end

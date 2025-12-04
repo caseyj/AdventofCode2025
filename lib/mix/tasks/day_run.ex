@@ -1,5 +1,4 @@
 defmodule Mix.Tasks.DayRun do
-
   use Mix.Task
 
   @impl Mix.Task
