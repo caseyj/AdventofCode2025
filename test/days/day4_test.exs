@@ -62,4 +62,9 @@ defmodule Days.Day4Test do
       assert Module.part1(data) == 13
     end
 
+  test "day4_test.exs Part 2 test" do
+    {:ok, data} = File.read("test/data/Day4.txt")
+    assert Module.part2(data) == 43
+  end
+
 end
