@@ -65,7 +65,7 @@ defmodule Days.Day3 do
     process_and_sum(str)+1#missing 1 for some reason, works fine in process and sum
   end
 
-  def part2(str) do
+  def part2(_str) do
     :ok
   end
 
