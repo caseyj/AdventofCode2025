@@ -49,7 +49,11 @@ defmodule Days.Day4 do
   end
 
   def get_coordinate_box({row_name, column_name}) do
-    coordinate_checkpoints = for x <- [-1, 0, 1], y <- [-1,0,1] do {x, y} end
+    coordinate_checkpoints =
+      for x <- [-1, 0, 1], y <- [-1, 0, 1] do
+        {x, y}
+      end
+
     Enum.reduce(
       coordinate_checkpoints,
       [],
@@ -59,7 +63,9 @@ defmodule Days.Day4 do
     )
   end
 
-  def filter_coordinates({coordinate_list, {center_row, center_col}, {grid_max_row, grid_max_col}}) do
+  def filter_coordinates(
+        {coordinate_list, {center_row, center_col}, {grid_max_row, grid_max_col}}
+      ) do
     Enum.reduce(coordinate_list, [], fn {row, col}, acc ->
       cond do
         row >= grid_max_row -> acc
@@ -81,6 +87,7 @@ defmodule Days.Day4 do
 
   defp find_accessible_rolls({map, roll_coords}) do
     grid_maximums = get_map_dims(map)
+
     Enum.reduce(roll_coords, 0, fn current_roll, acc ->
       if get_sum_point_box({current_roll, map, grid_maximums}) < 4 do
         acc + 1
@@ -92,9 +99,11 @@ defmodule Days.Day4 do
 
   defp remove_accessible_rolls({map, roll_coords}) do
     grid_maximums = get_map_dims(map)
+
     Enum.reduce(roll_coords, {map, roll_coords}, fn current_roll, {acc_map, acc_list} ->
       if get_sum_point_box({current_roll, acc_map, grid_maximums}) < 4 do
-        { put_in(acc_map, Tuple.to_list(current_roll), 0) , Enum.reject(acc_list, fn tuple -> tuple == current_roll end)}
+        {put_in(acc_map, Tuple.to_list(current_roll), 0),
+         Enum.reject(acc_list, fn tuple -> tuple == current_roll end)}
       else
         {acc_map, acc_list}
       end
@@ -108,6 +117,7 @@ defmodule Days.Day4 do
 
   defp remove_until_inaccessible({map, roll_coords}, entry_roll_coords_size) do
     {reduced_map, reduced_coords} = remove_accessible_rolls({map, roll_coords})
+
     if length(reduced_coords) == length(roll_coords) do
       entry_roll_coords_size - length(roll_coords)
     else
@@ -124,5 +134,4 @@ defmodule Days.Day4 do
     str_map_to_list_hits(str)
     |> remove_until_inaccessible()
   end
-
 end
