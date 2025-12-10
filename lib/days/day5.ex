@@ -79,6 +79,7 @@ defmodule Days.Day5 do
   def merge(left, right, acc \\ [])
   def merge([], right, acc), do: acc ++ right
   def merge(left, [], acc), do: acc ++ left
+
   def merge([a | left], [b | right], acc) do
     case range_swap(a, b) do
       [merged] ->
@@ -93,8 +94,9 @@ defmodule Days.Day5 do
   end
 
   # FIXED
-  def is_sorted([]),  do: true
+  def is_sorted([]), do: true
   def is_sorted([_]), do: true
+
   def is_sorted([a, b | tail]) do
     if range_less_than_test(a, b) >= 2 do
       is_sorted([b | tail])
@@ -106,6 +108,7 @@ defmodule Days.Day5 do
   # FIXED
   def sort([]), do: []
   def sort([single]), do: [single]
+
   def sort(range_list) do
     {left, right} = Enum.split(range_list, div(length(range_list), 2))
     merged = merge(sort(left), sort(right))
@@ -117,9 +120,9 @@ defmodule Days.Day5 do
     end
   end
 
-
   defp get_range_sum(ranges) do
-    Enum.reduce(sort(ranges), 0, fn current, acc -> acc + Range.size(current) end) # +1 because the inclusive subtraction doesnt necessarily work
+    # +1 because the inclusive subtraction doesnt necessarily work
+    Enum.reduce(sort(ranges), 0, fn current, acc -> acc + Range.size(current) end)
   end
 
   def part1(str) do
